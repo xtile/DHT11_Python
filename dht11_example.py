@@ -1,18 +1,27 @@
-import RPi.GPIO as GPIO
+from pyA20.gpio import gpio
+from pyA20.gpio import port
+
+
 import dht11
 import time
 import datetime
 
 # initialize GPIO
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-GPIO.cleanup()
+#gpio.setwarnings(False)
+#gpio.setmode(GPIO.BCM)
+PIN2 = port.PA6
+gpio.init()
+#gpio.cleanup()
+
+
 
 # read data using pin 14
-instance = dht11.DHT11(pin=14)
+instance = dht11.DHT11(pin=PIN2)
 
 while True:
     result = instance.read()
+    print("Last input: " + str(datetime.datetime.now()))
+
     if result.is_valid():
         print("Last valid input: " + str(datetime.datetime.now()))
         print("Temperature: %d C" % result.temperature)
